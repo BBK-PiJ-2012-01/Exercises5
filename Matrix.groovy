@@ -1,7 +1,8 @@
-class Matrix {
-    int[][] array2d      // arrays2d[y][x]
-    int[][] lengths2d    // lengths2d[y][x]
-    int width, height
+public class Matrix {
+    private int[][] array2d      // arrays2d[y][x]
+    private int[][] lengths2d    // lengths2d[y][x]
+    private int width, height
+    private MatrixChecker checker = new MatrixChecker()
     
     public Matrix(int new_width, int new_height) {
         width = new_width
@@ -61,7 +62,6 @@ class Matrix {
         String row_line = ("+" + "-"*(cell_width))*width + "+"
         
         for (y in 0..height-1) {
-            //print "-"*(1+width*(cell_width+1)) + "\n|" // The plus-one is for the "|"
             print row_line + "\n|"
             for (x in 0..width-1) {
                  right_spaces = ( cell_width - lengths2d[y][x] ) / 2
@@ -72,5 +72,9 @@ class Matrix {
         }
         println row_line
     }         
+    
+    public boolean isSymmetrical() {
+        return checker.isSymmetrical(array2d)
+    }
+    
 }
-
