@@ -19,4 +19,15 @@ public class MatrixChecker {
         }
         return true
     }
+    
+    public boolean isTriangular(int[][] matrix) {
+        int width = matrix[0].size()
+        for (i in 1..matrix.size()-1) {
+            println "checking row i="+i+": " + matrix[i][0..[i, width].min()-1]
+            if (matrix[i][0..[i, width].min()-1].toSet() != [0].toSet())
+                return false
+        }
+        return true
+    }
+        
 }

@@ -77,4 +77,8 @@ public class Matrix {
         return checker.isSymmetrical(array2d)
     }
     
+    public boolean isTriangular() {
+        return checker.isTriangular(array2d)
+    }
+    
 }
