@@ -1,15 +1,15 @@
 class Matrix {
-    int[][] array2d
-    int[][] lengths2d
+    int[][] array2d      // arrays2d[y][x]
+    int[][] lengths2d    // lengths2d[y][x]
     int width, height
     
-    Matrix(int new_width, int new_height) {
+    public Matrix(int new_width, int new_height) {
         width = new_width
         height = new_height
         verifySize()
         
-        array2d = [[1]*height]*width
-        lengths2d = [[1]*height]*width
+        array2d = [[1]*width]*height
+        lengths2d = [[1]*width]*height
     }
     
     private void verifySize() {
@@ -19,29 +19,28 @@ class Matrix {
             throw new BadInput("Height of matrix must be greater than 1")
     }
     
-    void setElement(int x, int y, int value) {
+    public void setElement(int x, int y, int value) {
         try {
-            array2d[x][y] = value
-            lengths2d[x][y] = (value as String).length()
+            array2d[y][x] = value
+            lengths2d[y][x] = (value as String).length()
         } catch(IndexOutOfBoundsException) {}
     }
     
-    void setRow(int y, String row_str) {
+    public void setRow(int y, String row_str) {
         int[] row_array = strToArray(row_str)
         
         if (row_array.size() != width)
             return
             
-        for (x in 0..width-1) {
-            setElement(x, y, row_array[x])
-        }
+        array2d[y] = row_array
+        lengths2d[y] = row_array.collect{ (it as String).length() }
     }
     
-    private int[] strToArray(String str) {
+    protected int[] strToArray(String str) {
         return str.split(",")*.toInteger()
     }
     
-    void setColumn(int x, String column_str) {
+    public void setColumn(int x, String column_str) {
         int[] column_array = strToArray(column_str)
         
         if (column_array.size() != height)
@@ -52,10 +51,11 @@ class Matrix {
         }
     }
     
-    void toString() {
-        
+    public String toString() {
+        return "[" + array2d.collect{ it.toList().join(",") }.toList().join(";") + "]"
+    }
     
-    void prettyPrint() {
+    public void prettyPrint() {
         int cell_width = lengths2d.flatten().max()
         int left_spaces, right_spaces
         String row_line = ("+" + "-"*(cell_width))*width + "+"
@@ -64,14 +64,13 @@ class Matrix {
             //print "-"*(1+width*(cell_width+1)) + "\n|" // The plus-one is for the "|"
             print row_line + "\n|"
             for (x in 0..width-1) {
-                 right_spaces = ( cell_width - lengths2d[x][y] ) / 2
-                left_spaces = cell_width - lengths2d[x][y] - right_spaces
-                print " "*left_spaces + array2d[x][y] + " "*right_spaces + "|"
+                 right_spaces = ( cell_width - lengths2d[y][x] ) / 2
+                left_spaces = cell_width - lengths2d[y][x] - right_spaces
+                print " "*left_spaces + array2d[y][x] + " "*right_spaces + "|"
             }
             print "\n"
         }
         println row_line
-    }
-                
+    }         
 }
 

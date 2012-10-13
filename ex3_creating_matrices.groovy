@@ -1,4 +1,6 @@
 Matrix m = new Matrix(3,4)
-m.setRow(1, "2,33,444")
-m.setColumn(0, "555,6666,77777,888888")
+m.setElement(2,3,-10)
+m.setRow(1, "66666,777777,8888888")
+m.setColumn(0, "2,33,444,5555")
 m.prettyPrint()
+println m.toString()
